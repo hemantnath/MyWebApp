@@ -2,6 +2,10 @@ name: A workflow for my Hello World file
 on:
 workflow_dispatch
 push
+paths:
+- '**'
+- '.github/workflows/*'
+
 jobs:
   build-job:
     name: Hello world action
