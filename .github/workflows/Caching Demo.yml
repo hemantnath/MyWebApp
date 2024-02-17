@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+ 
       - name: Create File
         run: echo $(date) > DemoFile.txt
-        
       - name: Cache DemoFile.txt     
         id: demo-cache-id
         uses: actions/cache@v3
@@ -15,13 +15,14 @@ jobs:
           cache-name: cache-demo-file
         with:
           path: DemoFile.txt
-          key: ${​​{​​ hashFiles('cache-dependency-file.txt') }​​}​​
+          key: ${{ hashFiles('cache-dependency-file.txt') }}
+ 
       - name: Print Content of DemoFile
         run: cat DemoFile.txt
-        
       - name: Cache Found
-        if: ${​​{​​ steps.demo-cache-id.outputs.cache-hit == 'true' }​​}​​
+        if: ${{ steps.demo-cache-id.outputs.cache-hit == 'true' }}
         run: echo "Cache Found"
+ 
       - name: Cache Not Found
-        if: ${​​{​​ steps.demo-cache.outputs.cache-hit != 'true' }​​}​​
+        if: ${{ steps.demo-cache.outputs.cache-hit != 'true' }}
         run: echo "Cache Not Found"
